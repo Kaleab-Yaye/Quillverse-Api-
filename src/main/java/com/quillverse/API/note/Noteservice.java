@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,5 +32,42 @@ public class Noteservice {
 
 
     }
+    public NoteDto findNoteById(Long id){
+        // you should alway know the findByID class always return an optional object.
+        Optional <Note> noteOptional = noteRepository.findById(id);
+        //we will be thougign an expetion on our own
+        if(noteOptional.isEmpty()){
+            throw new RuntimeException("the note you where looking for with the ID " + id + " is not found");
+        }
+        //now anbox the notOptional to give you teh object it is holding;
+
+        Note note = noteOptional.get();
+        // we return the DTO we needed.
+        return dtoMapper.toNDto(note);
+    }
+// we are hoping the user send the jasson format
+    public NoteDto updateNote(Long id, NoteDto noteDto){
+        Optional<Note> optionalNote = noteRepository.findById(id);
+        if(optionalNote.isEmpty()){
+            throw  new RuntimeException("the data with that id coudln't be found");
+        }
+        Note not = optionalNote.get();
+        if(!(noteDto.getContent()==null)){not.setContent(noteDto.getContent());
+
+        }
+        if(!(noteDto.getName()==(null))){
+            not.setName(noteDto.getName());
+        }
+        noteRepository.save(not);
+        return dtoMapper.toNDto(not);
+    }
+
+    public void deletNote(Long id) {
+        if (noteRepository.findById(id).isEmpty()) {
+            throw new RuntimeException("the note you were looking for with that id is not found");
+        }
+        noteRepository.deleteById(id);
+    }
+
 
 }
