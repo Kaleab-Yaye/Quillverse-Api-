@@ -1,4 +1,4 @@
-package com.quillverse.API.Note;
+package com.quillverse.API.note;
 
 import jakarta.persistence.*;
 // the entiity tells the hibrane to crate a table
@@ -13,11 +13,14 @@ public class Note {
     @Column(nullable = false)
 
     private String name;
-    private String Content ;
+    private String content ;
+    public Note(){
 
-    Note(String name , String Content){
+    }
+
+    public Note(String name , String Content){
         this.name = name;
-        this.Content  = Content;
+        this.content  = Content;
 
     }
 
@@ -28,17 +31,17 @@ public class Note {
         return Id;
     }
 
-    public void setname(String name){
+    public void setName(String name){
         this.name = name ;
     }
-    public String getname() {
+    public String getName() {
         return name;
     }
     public void setContent(String Contetent){
-        this.Content = Contetent;
+        this.content = Contetent;
     }
     public String getContent() {
-        return Content;
+        return content;
     }
 
     }

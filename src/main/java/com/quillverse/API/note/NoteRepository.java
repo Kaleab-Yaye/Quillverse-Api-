@@ -1,4 +1,4 @@
-package com.quillverse.API.Note;
+package com.quillverse.API.note;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
